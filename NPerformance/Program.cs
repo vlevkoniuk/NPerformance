@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace NPerformance
 {
@@ -20,6 +22,8 @@ namespace NPerformance
 
         async static Task Main(string[] args)
         {
+            List<RequestSequenceCollection> requestSequenceCollection = TestFilesHelper.ReadTestFile();
+
             HttpRequests client = new HttpRequests();
             client.InitializaClient("https://localhost:44305/");
             

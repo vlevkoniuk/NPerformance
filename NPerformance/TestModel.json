@@ -1,0 +1,100 @@
+[
+  {
+    "UserNo": 1,
+    "RequestsSequences": [
+      {
+        "Requests": [
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/test",
+            "Method": "GET",
+            "Body": "",
+            "Headers": [
+
+            ]
+          },
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testpost",
+            "Method": "POST",
+            "Body": "",
+            "Headers": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "Requests": [
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/test",
+            "Method": "HEAD",
+            "Body": "",
+            "Headers": [
+
+            ]
+          },
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testpost",
+            "Method": "HEAD",
+            "Body": "",
+            "Headers": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "UserNo": 2,
+    "RequestsSequences": [
+      {
+        "Requests": [
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testusr2",
+            "Method": "GET",
+            "Body": "",
+            "Headers": [
+
+            ]
+          },
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testpostusr2",
+            "Method": "POST",
+            "Body": "",
+            "Headers": [
+
+            ]
+          }
+        ]
+      },
+      {
+        "Requests": [
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testusr2",
+            "Method": "HEAD",
+            "Body": "",
+            "Headers": [
+
+            ]
+          },
+          {
+            "Url": "https://localhost:44305/",
+            "Uri": "weatherforecast/testpostusr2",
+            "Method": "HEAD",
+            "Body": "",
+            "Headers": [
+
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

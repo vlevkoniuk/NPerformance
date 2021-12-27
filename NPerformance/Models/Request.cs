@@ -9,7 +9,7 @@ namespace NPerformance.Models
     {
         public string Url { get; set; }
         public string Uri { get; set; }
-        public HttpMethod Mthod { get; set; }
+        public string Mthod { get; set; }
         public string Body { get; set; }
         public List<Headers> Headers { get; set; }
     }
