@@ -25,7 +25,7 @@ namespace NPerformance
             List<RequestSequenceCollection> requestSequenceCollection = TestFilesHelper.ReadTestFile();
 
             HttpRequests client = new HttpRequests();
-            client.InitializaClient("https://localhost:44305/");
+            client.InitializeClient("https://localhost:44305/");
             
             //List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 1000, 10);
             List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 10);

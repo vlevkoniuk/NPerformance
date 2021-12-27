@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Http.Headers;
+using NPerformance.Models;
 
 namespace NPerformance.Helpers
 {
@@ -17,6 +18,16 @@ namespace NPerformance.Helpers
         private string baseAddress;
         private bool authCapable;
         private bool _initialized;
+        public string Url 
+        {
+            get
+            {
+                if (_initialized)
+                    return baseAddress;
+                else
+                    return null;
+            }
+        }
 
         public bool Initialized
         {
@@ -51,7 +62,7 @@ namespace NPerformance.Helpers
             }
         }
 
-        public void InitializaClient(string aType, string aToken, string bAddress)
+        public void InitializeClient(string aType, string aToken, string bAddress)
         {
             authType = aType;
             authToken = aToken;
@@ -59,7 +70,7 @@ namespace NPerformance.Helpers
             authCapable = true;
         }
 
-        public void InitializaClient(string bAddress)
+        public void InitializeClient(string bAddress)
         {
             authType = "";
             authToken = "";
@@ -129,6 +140,37 @@ namespace NPerformance.Helpers
                 }
             }
 
+            //T resp = JsonSerializer.Deserialize<T>(responseString);
+            //return resp;
+        }
+
+        public async Task<HttpStatusCode> PostAsyncStatucCode(string uri, string body)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(baseAddress);
+                    if (IsAuth)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authType, authToken);
+                    }
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+                    request.Content = new StringContent(body, Encoding.UTF8, "application/json");//CONTENT-TYPE header
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+                    return response.StatusCode;
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine("\nException Caught!");
+                    Console.WriteLine("Message :{0} ", e.Message);
+                    return HttpStatusCode.FailedDependency;
+                }
+            }
             //T resp = JsonSerializer.Deserialize<T>(responseString);
             //return resp;
         }
@@ -215,6 +257,21 @@ namespace NPerformance.Helpers
 
             T resp = JsonSerializer.Deserialize<T>(responseString);
             return resp;
+        }
+
+        public static async Task<HttpStatusCode> SendRequestAndWaitResponse(HttpRequests client,Request req)
+        {
+            switch (req.Mthod)
+            {
+                case "POST":
+                    return await client.PostAsyncStatucCode(req.Uri, req.Body);
+                    break;
+                case "GET":
+                    return await client.GetAsyncStatucCode(req.Uri);
+                    break;
+            }
+            return HttpStatusCode.Conflict;
+
         }
     }
 }
