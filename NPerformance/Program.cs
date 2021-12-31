@@ -23,19 +23,49 @@ namespace NPerformance
         async static Task Main(string[] args)
         {
             List<RequestSequenceCollection> requestSequenceCollection = TestFilesHelper.ReadTestFile();
+            List<Task> tasks = new List<Task>();
+            Parallel.For(1, 3, (i) =>
+            {
+                Task t = new Task(() => {
+                    TaskHelper.PrepareAndRunTasks(i, requestSequenceCollection, perfData);
+                });
+                lock (_locker)
+                {
+                    tasks.Add(t);
+                }
+                //tasks.Add(t);
+            });
+            //for (int i = 1; i <= 2; i++)
+            //{
+            //    Task t = new Task(() => {
+            //        TaskHelper.PrepareAndRunTasks(i, requestSequenceCollection, perfData);
+            //    });
+            //    tasks.Add(t);
+            //}
+            for (int y = 0; y < tasks.Count; y++)
+            {
+                tasks[y].Start();
+            }
+            PerformTesting(tasks, requestSequenceCollection, 10);
+            Task.WaitAll(tasks.ToArray());
 
-            HttpRequests client = new HttpRequests();
-            client.InitializeClient("https://localhost:44305/");
+            TaskHelper.PrepareAndRunTasks(1, requestSequenceCollection, perfData);
+            
+            //var ttt = TaskHelper.CreateAsync(1, requestSequenceCollection, perfData);
+            
+
+            //HttpRequests client = new HttpRequests();
+            //client.InitializeClient("https://localhost:44305/");
             
             //List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 1000, 10);
-            List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 10);
+            //List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 10);
 
             Stopwatch sw = new Stopwatch();
-            //sw.Start();
-            //ThreadedStartExecution(tasks, 3, 10);
-            //sw.Stop();
+            //task.Start();
+            //var ttt = await TaskHelper.CreateAsync(1, requestSequenceCollection, perfData);
+            sw.Stop();
 
-            EmulateUsersExecution(tasks, 10, 50, 20000, client, "weatherforecast/test");
+            //EmulateUsersExecution(tasks, 10, 50, 20000, client, "weatherforecast/test");
 
             int cntNotOk = 0;
             //Verify if we have not OK requests
@@ -54,6 +84,24 @@ namespace NPerformance
             Console.ReadKey();
             
             
+        }
+
+        static void PerformTesting(List<Task> tasks, List<RequestSequenceCollection> requestSequenceCollection, int cntSeconds)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds / 1000 < cntSeconds)
+            {
+                Parallel.ForEach(tasks, (element, loopstate, elementIndex) =>
+                {
+                    if (element.Status == TaskStatus.RanToCompletion)
+                    {
+                        tasks[(int)elementIndex].ContinueWith(x => {
+                            TaskHelper.PrepareAndRunTasks((int)elementIndex + 1, requestSequenceCollection, perfData);
+                        });
+                    }
+                });
+            }
+            sw.Stop();
         }
 
         static List<Task> CreateThreadCalls(HttpRequests client,string uri, int cntCalls, int cntThreads)

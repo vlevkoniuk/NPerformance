@@ -78,6 +78,11 @@ namespace NPerformance.Helpers
             authCapable = false;
         }
 
+        public string GetBaseUrl()
+        {
+            return baseAddress;
+        }
+
         public async Task<T> GetAsync<T>(string uri)
         {
             string responseString = string.Empty;
@@ -175,6 +180,34 @@ namespace NPerformance.Helpers
             //return resp;
         }
 
+        public async Task<HttpStatusCode> HeadAsyncStatucCode(string uri)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(baseAddress);
+                    if (IsAuth)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authType, authToken);
+                    }
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Head, uri);
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+                    return response.StatusCode;
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine("\nException Caught!");
+                    Console.WriteLine("Message :{0} ", e.Message);
+                    return HttpStatusCode.FailedDependency;
+                }
+            }
+        }
+
         public async Task<T> GetAsync<T>(string uri, Dictionary<string, string> requestParams)
         {
             StringBuilder sbURL = new StringBuilder(uri);
@@ -261,13 +294,16 @@ namespace NPerformance.Helpers
 
         public static async Task<HttpStatusCode> SendRequestAndWaitResponse(HttpRequests client,Request req)
         {
-            switch (req.Mthod)
+            switch (req.Method)
             {
                 case "POST":
                     return await client.PostAsyncStatucCode(req.Uri, req.Body);
                     break;
                 case "GET":
                     return await client.GetAsyncStatucCode(req.Uri);
+                    break;
+                case "HEAD":
+                    return await client.HeadAsyncStatucCode(req.Uri);
                     break;
             }
             return HttpStatusCode.Conflict;
