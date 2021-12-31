@@ -144,9 +144,6 @@ namespace NPerformance.Helpers
                     return HttpStatusCode.FailedDependency;
                 }
             }
-
-            //T resp = JsonSerializer.Deserialize<T>(responseString);
-            //return resp;
         }
 
         public async Task<HttpStatusCode> PostAsyncStatucCode(string uri, string body)
@@ -176,8 +173,6 @@ namespace NPerformance.Helpers
                     return HttpStatusCode.FailedDependency;
                 }
             }
-            //T resp = JsonSerializer.Deserialize<T>(responseString);
-            //return resp;
         }
 
         public async Task<HttpStatusCode> HeadAsyncStatucCode(string uri)

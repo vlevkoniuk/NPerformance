@@ -18,7 +18,6 @@ namespace NPerformance
         static Dictionary<int, string> taskinfo = new Dictionary<int, string>();
         private static readonly object _locker = new object();
         private static readonly object _locker1 = new object();
-        //HttpRequests client = new HttpRequests();
 
         async static Task Main(string[] args)
         {
@@ -33,15 +32,8 @@ namespace NPerformance
                 {
                     tasks.Add(t);
                 }
-                //tasks.Add(t);
             });
-            //for (int i = 1; i <= 2; i++)
-            //{
-            //    Task t = new Task(() => {
-            //        TaskHelper.PrepareAndRunTasks(i, requestSequenceCollection, perfData);
-            //    });
-            //    tasks.Add(t);
-            //}
+
             for (int y = 0; y < tasks.Count; y++)
             {
                 tasks[y].Start();
@@ -53,18 +45,6 @@ namespace NPerformance
             
             //var ttt = TaskHelper.CreateAsync(1, requestSequenceCollection, perfData);
             
-
-            //HttpRequests client = new HttpRequests();
-            //client.InitializeClient("https://localhost:44305/");
-            
-            //List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 1000, 10);
-            //List<Task> tasks = CreateThreadCalls(client, "weatherforecast/test", 10);
-
-            Stopwatch sw = new Stopwatch();
-            //task.Start();
-            //var ttt = await TaskHelper.CreateAsync(1, requestSequenceCollection, perfData);
-            sw.Stop();
-
             //EmulateUsersExecution(tasks, 10, 50, 20000, client, "weatherforecast/test");
 
             int cntNotOk = 0;
