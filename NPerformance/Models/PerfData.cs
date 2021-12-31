@@ -14,7 +14,7 @@ namespace NPerformance.Models
         public List<HttpStatusCode> StatucCodes { get; set; }
         public long Order { get; set; }
         public List<long> Orders { get; set; }
-        int UserNo { get; set; }
+        public int UserNo { get; set; }
 
         public PerfData()
         {

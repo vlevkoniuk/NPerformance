@@ -38,7 +38,7 @@ namespace NPerformance
             {
                 tasks[y].Start();
             }
-            PerformTesting(tasks, requestSequenceCollection, 10);
+            PerformTesting(tasks, requestSequenceCollection, 10, 50);
             Task.WaitAll(tasks.ToArray());
 
             TaskHelper.PrepareAndRunTasks(1, requestSequenceCollection, perfData);
@@ -57,7 +57,7 @@ namespace NPerformance
                 }
             }
 
-            Console.WriteLine($"Successfully Completed {perfData.Count} request during {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"Successfully Completed {perfData.Count} request during {10} ms");
             Console.WriteLine($"Average Request completion time is {perfData.Select( x => x.RequestCompletionTime).Average()} ms");
             Console.WriteLine($"NotOk status received for {cntNotOk}");
 
@@ -66,7 +66,7 @@ namespace NPerformance
             
         }
 
-        static void PerformTesting(List<Task> tasks, List<RequestSequenceCollection> requestSequenceCollection, int cntSeconds)
+        static void PerformTesting(List<Task> tasks, List<RequestSequenceCollection> requestSequenceCollection, int cntSeconds, int delay)
         {
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.ElapsedMilliseconds / 1000 < cntSeconds)
@@ -75,6 +75,7 @@ namespace NPerformance
                 {
                     if (element.Status == TaskStatus.RanToCompletion)
                     {
+                        Thread.Sleep(delay);
                         tasks[(int)elementIndex].ContinueWith(x => {
                             TaskHelper.PrepareAndRunTasks((int)elementIndex + 1, requestSequenceCollection, perfData);
                         });

@@ -56,6 +56,7 @@ namespace NPerformance.Helpers
             pd.RequestCompletionTime = stopwatch.ElapsedMilliseconds;
             lock (_locker)
             {
+                pd.UserNo = userNo;
                 perfData.Add(pd);
 
             }
@@ -93,9 +94,10 @@ namespace NPerformance.Helpers
 
             }
             stopwatch.Stop();
-            pd.RequestCompletionTime = stopwatch.ElapsedMilliseconds;
             lock (_locker)
             {
+                pd.RequestCompletionTime = stopwatch.ElapsedMilliseconds;
+                pd.UserNo = userNo;
                 perfData.Add(pd);
                 
             }
