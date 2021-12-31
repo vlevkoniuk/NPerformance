@@ -38,7 +38,9 @@ namespace NPerformance
             {
                 tasks[y].Start();
             }
+            Stopwatch sw = Stopwatch.StartNew();
             PerformTesting(tasks, requestSequenceCollection, 10, 50);
+            sw.Stop();
             Task.WaitAll(tasks.ToArray());
 
             TaskHelper.PrepareAndRunTasks(1, requestSequenceCollection, perfData);
@@ -57,7 +59,7 @@ namespace NPerformance
                 }
             }
 
-            Console.WriteLine($"Successfully Completed {perfData.Count} request during {10} ms");
+            Console.WriteLine($"Successfully Completed {perfData.Count} request during {sw.ElapsedMilliseconds} ms");
             Console.WriteLine($"Average Request completion time is {perfData.Select( x => x.RequestCompletionTime).Average()} ms");
             Console.WriteLine($"NotOk status received for {cntNotOk}");
 
