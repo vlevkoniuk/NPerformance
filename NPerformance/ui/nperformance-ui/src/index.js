@@ -5,10 +5,13 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ConfigContext from './Shared/ConfigContext'
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <ConfigContext.Provider value={null}>
+      <App />
+    </ConfigContext.Provider>
   </BrowserRouter>,
   document.getElementById('root')
 );

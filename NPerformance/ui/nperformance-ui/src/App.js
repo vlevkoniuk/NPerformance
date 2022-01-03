@@ -5,17 +5,28 @@ import AppDefault from './Pages/Default';
 import './App.css';
 import { UserRequests } from './Pages/userrequests';
 import { Layout } from './Shared/Layout';
+import React, { useState, useContext } from "react";
+import ConfigContext, { ConfigProvider } from './Shared/ConfigContext'
+
 
 function App() {
   return (
-    <Layout>
-      <div className="App">
-      <Routes>
-        <Route path="/" element={<AppDefault />} />
-        <Route path="/requests" element={<UserRequests />} />
-      </Routes>
-    </div>
-    </Layout>
+    
+    <ConfigProvider>
+      <Layout>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<AppDefault />} />
+            <Route path="/requests" element={<UserRequests />} />
+          </Routes>
+        </div>
+      </Layout>
+    </ConfigProvider>
+      
+    
+      
+
+    
     
   );
 }
