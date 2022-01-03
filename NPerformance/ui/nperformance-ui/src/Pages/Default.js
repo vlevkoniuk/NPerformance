@@ -3,14 +3,15 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import ConfigContext from '../Shared/ConfigContext'
+import PerformanceContext from '../Shared/PerformanceContext'
 
 
 function AppDefault() {
     const [conconf, setConconf] = useContext(ConfigContext);
+    const [perf, setPerf] = useContext(PerformanceContext);
     const [show, setShow] = useState(false);
     const inputForm = useRef(null);
-    const inputRef = useRef()
-    const [file, setFiles] = useState(null)
+    const [file, setFile] = useState(null)
     const [conf, setConf] = useState(null)
 
     const handleClose = () => setShow(false);
@@ -34,7 +35,7 @@ function AppDefault() {
 
   const showFile = async (e) => {
     e.preventDefault()
-    setFiles(e)
+    setFile(e)
   }
 
   return (
@@ -59,7 +60,7 @@ function AppDefault() {
             >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Modal heading
+                    Select Input File
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -79,8 +80,6 @@ function AppDefault() {
                 </Button>
             </Modal.Footer>
         </Modal>
-      
-      
     </div>
   );
 }
