@@ -7,12 +7,12 @@ import PerformanceContext from '../Shared/PerformanceContext'
 
 
 function AppDefault() {
-    const [conconf, setConconf] = useContext(ConfigContext);
-    const [perf, setPerf] = useContext(PerformanceContext);
+    const {conf, setConf} = useContext(ConfigContext);
+    // const [perf, setPerf] = useContext(PerformanceContext);
     const [show, setShow] = useState(false);
     const inputForm = useRef(null);
     const [file, setFile] = useState(null)
-    const [conf, setConf] = useState(null)
+    const [conconf, setConconf] = useState(null)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -23,13 +23,13 @@ function AppDefault() {
         reader.onload = async (file) => { 
             const text = (file.target.result)
             var cnf = JSON.parse(text)
-            setConf(cnf)
             setConconf(cnf)
+            setConf(cnf);
             //alert(text)
         };
         reader.readAsText(file.target.files[0])
-        console.log(conf)
         console.log(conconf)
+        console.log(conf)
         setShow(false);
     }
 
@@ -50,7 +50,9 @@ function AppDefault() {
             <div>
                 <Button variant="primary" size="lg" onClick={handleShow}>Open existing configuration</Button>
             </div>
+            <Label file={file}/>
         </div>
+        
         <Modal
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -83,6 +85,14 @@ function AppDefault() {
     </div>
   );
 }
+
+function Label(props) {
+    console.log(props);
+    if (props.file)
+        return <h3>Loaded file: {props.file.target.files[0].name}</h3>;
+    else 
+        return <h3>No Files Selected yet</h3>;
+  }
 
 export default AppDefault;
 

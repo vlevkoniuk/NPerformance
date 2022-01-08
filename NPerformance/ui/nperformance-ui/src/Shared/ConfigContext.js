@@ -20,10 +20,10 @@ class ConfigProvider extends Component {
     
         return (
           <ConfigContext.Provider
-            value={[
+            value={{
               conf,
               setConf,
-            ]} >
+            }} >
             {children}
           </ConfigContext.Provider>
         )
