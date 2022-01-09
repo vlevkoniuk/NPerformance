@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ConfigContext from '../Shared/ConfigContext'
 import SingleRequest from '../Elements/SingleRequest'
+import Pagination from '../Shared/Pagination'
 
 export default function Requests() {
   const [expanded, setExpanded] = React.useState(false);
@@ -36,6 +37,7 @@ export default function Requests() {
 
     return (
       <div>
+        <Pagination />
         {
           conf.Requests.map((value, index) => {
             return <SingleRequest 

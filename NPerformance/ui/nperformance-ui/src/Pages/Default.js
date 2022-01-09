@@ -39,7 +39,7 @@ function AppDefault() {
   }
 
   return (
-      <div className="App">
+      <div>
           <header className="App-header"> 
             Welcome to the NPerformance
           </header>
