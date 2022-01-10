@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ConfigContext from '../Shared/ConfigContext'
 import SingleRequest from '../Elements/SingleRequest'
-import Pagination from '../Shared/Pagination'
+import Pagination from '../Elements/Pagination'
 
 export default function Requests() {
   const [expanded, setExpanded] = React.useState(false);
@@ -23,7 +23,6 @@ export default function Requests() {
     else {
       setExpand(panel)
     }
-    
   }
   
 

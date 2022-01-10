@@ -10,18 +10,34 @@ import ListItem from '@mui/material/ListItem';
 
 export default function SingleRequest(props) {
   const [expanded, setExpanded] = React.useState(false);
+  const [expand, setExpand] = React.useState(false)
+  const [reqexpanded, setReqexpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    console.log(panel)
-    setExpanded(isExpanded ? panel : false);
-    props.func(panel)
+    //console.log(panel)
+    if (props.func) {
+        props.func(panel);
+        setExpand(props.expanded);
+        setReqexpanded(panel);
+    }
+    else {
+        setExpanded(isExpanded ? panel : false);
+        if (reqexpanded === panel) {
+            setExpand(false);
+            setReqexpanded("");
+        }
+        else {
+            setExpand(true);
+            setReqexpanded(panel);
+        }
+    }
   };
 
     return (
         <Accordion 
-                expanded={props.expanded} 
-                key={props.request.Id} 
-                id={'request-'+props.request.Id}
+                expanded={props.func ? props.expanded : expand} 
+                key={'single-request-' + props.request.Id} 
+                id={'single-request-' + props.request.Id}
                 onChange={ handleChange('request-'+props.request.Id)}
             >
                 <AccordionSummary
@@ -35,7 +51,7 @@ export default function SingleRequest(props) {
                     <Typography sx={{ width: '10%', flexShrink: 0 }}>
                         <strong>{props.request.Method}</strong>
                     </Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>{props.request.Url + props.request.Uri}</Typography>
+                    <Typography sx={{ color: 'text.secondary' }}>{props.request.Url}{props.request.Uri}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                         <List>

@@ -25,7 +25,8 @@ return (
             height: '45px',
             backgroundColor: 'white',
             display: 'flex',
-            flexDirection: 'row'}}
+            flexDirection: 'row',
+            alignItems: 'stretch'}}
         >
             <div style={{textAlign: 'center', width: '15%',  justifyContent: 'center'}}>
                 <ArrowBackIosIcon color='primary'/>
