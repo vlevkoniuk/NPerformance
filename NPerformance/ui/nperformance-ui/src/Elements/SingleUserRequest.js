@@ -58,7 +58,12 @@ export default function SingleUserRequest(props) {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    
+                    <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                        <strong>Username:</strong> {props.userRequest.Username}
+                    </Typography>
+                    <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                        <strong>Password:</strong> {props.userRequest.Password}
+                    </Typography>
                     {
                         props.userRequestSequences.map((userRequestSequence, index) => {
                             return (

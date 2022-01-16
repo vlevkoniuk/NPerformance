@@ -47,6 +47,8 @@ export default function UserRequests() {
                 value.RequestsSequences.forEach((RequestsSequence, index) => {
                     var userReq = {};
                     userReq["Description"]=RequestsSequence.Description;
+                    userReq["Username"]=RequestsSequence.UserName;
+                    userReq["Password"]=RequestsSequence.UserPwd;
                     var requests = [];
                     RequestsSequence.Requests.forEach((reqvalue, reqindex) => {
                         conf.Requests.forEach((globalreqvalue, globalreqindex) => {

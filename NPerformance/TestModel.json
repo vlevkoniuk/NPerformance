@@ -1,4 +1,13 @@
 {
+	"Configuration": 
+	{
+		"TestDurationS": 60,
+		"WarmUpDurationS": 5,
+		"RequestSequenceWaitIntervalMs": 1000,
+		"UsersCountToTest": 2,
+		"Description": "Test Run Description",
+		"MaxWaitResponseTimeS": 5
+	},
 	"Requests": [
 		{
 			"Id": 1,
@@ -140,6 +149,8 @@
 	"UserRequests": [
 	  {
 		"UserNo": 1,
+		"UserName": "",
+		"UserPwd": "",
 		"Description": "Test user description 1",
 		"RequestsSequences": [
 		  {
@@ -172,6 +183,8 @@
 		  },
 		  {
 			"UserNo": 2,
+			"UserName": "",
+			"UserPwd": "",
 			"Description": "Test user description 2",
 			"RequestsSequences": [
 			  {
