@@ -10,12 +10,10 @@ export default function Headers(props) {
             <div>
                 {
                     props.request.Headers.map((value, index) => {
+                        // console.log('headers-'+props.request.Id+'-'+index)
                         return (
                             <>
-                                <ListItem disablePadding 
-                                key={'headers-'+props.request.Id+'-'+index}
-                                
-                                >
+                                <ListItem disablePadding  key={'headers-'+props.request.Id+'-'+index}>
                                     <Typography sx={{ width: '20%', flexShrink: 0 }}>{value.HeaderName} :</Typography>
                                     <Typography > {value.HeaderValue}</Typography>
                                 </ListItem> 

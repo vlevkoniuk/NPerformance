@@ -6,6 +6,7 @@ import AppDefault from './Pages/Default';
 import './App.css';
 import UserRequests from './Pages/UserRequests';
 import Requests from './Pages/Requests';
+import Rules from './Pages/Rules';
 import { Layout } from './Shared/Layout';
 import React, { useState, useContext } from "react";
 import ConfigContext, { ConfigProvider } from './Shared/ConfigContext'
@@ -25,6 +26,7 @@ function App() {
               <Route exact path="/" element={<AppDefault />} />
               <Route exact path="/configure/requestsbyuser" element={<UserRequests />} />
               <Route exact path="/configure/requests" element={<Requests />} />
+              <Route exact path="/configure/rules" element={<Rules />} />
             </Routes>
           </div>
         </Layout>

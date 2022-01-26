@@ -11,6 +11,7 @@ import Pagination from '../Elements/Pagination'
 export default function Requests() {
   const [expanded, setExpanded] = React.useState(false);
   const [expand, setExpand] = React.useState("");
+  const {conf, setConf} = useContext(ConfigContext);
 
   const handleChange = (panel) =>  {
     setExpand(panel);
@@ -26,12 +27,13 @@ export default function Requests() {
   }
   
 
-  const {conf, setConf} = useContext(ConfigContext);
+  
 
   useEffect(() => {
     if (!conf) return;
     // use user._id
   },[conf])
+  
   console.log(conf);
 
     return (
