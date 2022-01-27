@@ -8,6 +8,11 @@ import Input from '@mui/material/Input';
 
 export default function Rules(props) {
 
+    const handleChange = (event) => {
+        console.log(event.target.value);
+        props.func(props.name, event.target.value)
+    }
+
     return (
         <>
             <Stack spacing={1} direction='row' style={{padding: "5px"}} key={"stack-" + props.value}> 
@@ -18,7 +23,7 @@ export default function Rules(props) {
                     {props.value}
                 </Box>
                 <Box sx={{ width: '70%', flexShrink: 0 }} hidden={!props.editable} key={"edit-value-" + props.name}>
-                    <Input variant="standard" defaultValue={props.value}/>
+                    <Input variant="standard" defaultValue={props.value} onChange={handleChange}/>
                 </Box>
             </Stack> 
         </>

@@ -8,7 +8,24 @@ import Box from '@mui/material/Box';
 
 export default function Rules() {
     const {conf, setConf} = useContext(ConfigContext);
-    const [isEditable, setIsEditable] = useState(false)
+    const [isEditable, setIsEditable] = useState(false);
+
+    const confChange = (key, value) => {
+        console.log(key, value);
+        let tmpConf = conf;
+        let intValue = Number(value);
+        if (!!intValue){
+            tmpConf.Configuration[key] = intValue;
+        }
+        else {
+            tmpConf.Configuration[key] = value;
+        }
+        
+        console.log(tmpConf);
+        setConf(tmpConf);
+        console.log(conf)
+    }
+
     return (
         <>
             <Stack spacing={1} direction='row' style={{padding: "5px"}}> 
@@ -34,6 +51,7 @@ export default function Rules() {
                         name={value} 
                         value={conf.Configuration[value]}
                         editable={isEditable}
+                        func={confChange}
                         key={"conf-" + value} 
                     />
                 );
