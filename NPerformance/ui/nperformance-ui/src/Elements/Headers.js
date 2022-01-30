@@ -7,17 +7,15 @@ export default function Headers(props) {
     if (props.request.Headers) {
         //console.log(props)
         return (
-            <div>
+            <div key={props.request.Id + '-headers'}>
                 {
                     props.request.Headers.map((value, index) => {
                         // console.log('headers-'+props.request.Id+'-'+index)
                         return (
-                            <>
-                                <ListItem disablePadding  key={'headers-'+props.request.Id+'-'+index}>
-                                    <Typography sx={{ width: '20%', flexShrink: 0 }}>{value.HeaderName} :</Typography>
-                                    <Typography > {value.HeaderValue}</Typography>
-                                </ListItem> 
-                            </>
+                             <ListItem disablePadding  key={'headers-'+props.request.Id+'-'+index}>
+                                <Typography sx={{ width: '20%', flexShrink: 0 }}>{value.HeaderName} :</Typography>
+                                <Typography > {value.HeaderValue}</Typography>
+                            </ListItem> 
                         );
                     })
                 }

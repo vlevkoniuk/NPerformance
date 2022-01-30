@@ -11,7 +11,7 @@ export default function Rules() {
     const [isEditable, setIsEditable] = useState(false);
 
     const confChange = (key, value) => {
-        console.log(key, value);
+        //console.log(key, value);
         let tmpConf = conf;
         let intValue = Number(value);
         if (!!intValue){
@@ -20,10 +20,7 @@ export default function Rules() {
         else {
             tmpConf.Configuration[key] = value;
         }
-        
-        console.log(tmpConf);
         setConf(tmpConf);
-        console.log(conf)
     }
 
     return (
