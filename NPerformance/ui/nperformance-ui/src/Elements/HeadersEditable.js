@@ -12,6 +12,11 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 export default function HeadersEditable(props) {
     console.log(props);
+    const ix = props.index
+
+    const handleDelete = () => {
+        props.delete(ix)
+    }
 
     if (props.header) {
         //console.log(props)
@@ -48,8 +53,8 @@ export default function HeadersEditable(props) {
                         </FormControl>
                     </Box>
                     <Box>
-                        <IconButton>
-                            <DeleteRoundedIcon sx={{ color: "red" }}/>
+                        <IconButton onClick={handleDelete}>
+                            <DeleteRoundedIcon sx={{ color: "red" }} />
                         </IconButton>
                     </Box>
                </Stack>

@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RequestModal from '../Elements/RequestModal';
+import RequestModalMaterial from '../Elements/RequestModalMaterial';
 
 export default function Requests() {
   const [expanded, setExpanded] = useState(false);
@@ -119,7 +120,7 @@ export default function Requests() {
             show={showModal}
             onHide={() => setShowModal(false)}
             request={curentReq}
-            
+            addnewheader={addEmptyHeader}
           />
         </div>
       </>

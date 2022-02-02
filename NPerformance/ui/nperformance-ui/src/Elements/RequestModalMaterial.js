@@ -11,17 +11,20 @@ import NativeSelect from '@mui/material/NativeSelect';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HeadersEditable from './HeadersEditable';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
 
-export default function RequestModal(props) {
+export default function RequestModalMaterial(props) {
     const [editMode, setEditMode] = useState(props.isEdit);
+    const [open, setOpen] = React.useState(props.show);
     const newReq = {};
     const [currentObj, setCurrentObj] = useState(props.request);
     const [headers, setHeaders] = useState(props.request.Headers)
-    const [state, updateState] = React.useState();
-    
     console.log(props)
-
-    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     const createNewRequestObject = () => {
         let req = {
@@ -40,33 +43,53 @@ export default function RequestModal(props) {
         return req
     }
 
+    const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+        '& .MuiDialogContent-root': {
+          padding: theme.spacing(2),
+        },
+        '& .MuiDialogActions-root': {
+          padding: theme.spacing(1),
+        },
+      }));
+      
+      const BootstrapDialogTitle = (props) => {
+        const { children, onClose, ...other } = props;
+      
+        return (
+          <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+            {children}
+            {onClose ? (
+              <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+          </DialogTitle>
+        );
+      };
+
     const addEmptyHeader = () => {
         let tmp = currentObj;
-        let tmpHeaders = currentObj.Headers;
         let newHeader = {
             HeaderName: "Accept",
 			HeaderValue: ""
         };
-        tmpHeaders.push(newHeader);
-        setHeaders(tmpHeaders);
-        tmp.Headers=tmpHeaders;
+        tmp.Headers.push(newHeader);
         setCurrentObj(tmp);
-        console.log(headers, currentObj);
-        //force update modal
-        forceUpdate();
+        console.log(currentObj);
     }
 
-    const deleteHeader = (index) => {
-        let tmp = currentObj;
-        let tmpHeaders = currentObj.Headers;
-        tmpHeaders.splice(index, 1);
-        setHeaders(tmpHeaders);
-        tmp.Headers=tmpHeaders;
-        setCurrentObj(tmp);
-        console.log(index, tmpHeaders, tmp);
-        //force update modal
-        forceUpdate();
-    }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     // useEffect(() => {
     //     if (props.isEdit) {
@@ -77,21 +100,17 @@ export default function RequestModal(props) {
     //         console.log("rerender modal", props);
     //         //setCurrentObj(createNewRequestObject());
     //     }
-    // }, [ currentObj])
+    // }, [props,currentObj.Headers])
 
     return (
-        <Modal
-            {...props}
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
+        <BootstrapDialog
+            onClose={handleClose}
+            open={open}
             >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
+            <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
                 Add/Edit Request
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+            </BootstrapDialogTitle>
+            <DialogContent >
                 <Stack direction='row' spacing={2}>
                     <Box sx={{ width: '5%', flexShrink: 0 }}>
                         <FormControl variant="standard" sx={{width: '100%'}} disabled={true}>
@@ -146,15 +165,10 @@ export default function RequestModal(props) {
                         </IconButton>
                         </Box>
                     </Stack>
-                    {headers.map((value, index) => {
+                    {currentObj.Headers.map((value, index) => {
                         console.log("rendering headers")
                         return (
-                            <HeadersEditable 
-                                header={value} 
-                                key={currentObj.Id + '-' + value.HeaderName + '-' + index}
-                                index={index}
-                                delete={deleteHeader}
-                            />
+                            <HeadersEditable header={value} key={currentObj.Id + '-' + value.HeaderName + '-' + index}/>
                         );
                     })}
                 </Box>
@@ -172,11 +186,11 @@ export default function RequestModal(props) {
                     </Box>
                 </Box>
 
-            </Modal.Body>
-            <Modal.Footer>
+            </DialogContent >
+            <DialogActions>
                 <Button onClick={props.onHide}>Save</Button>
                 <Button onClick={props.onHide} variant="danger">Close</Button>
-            </Modal.Footer>
-        </Modal>
+            </DialogActions>
+        </BootstrapDialog>
     );
 }
