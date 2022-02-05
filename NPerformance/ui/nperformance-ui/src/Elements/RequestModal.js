@@ -68,6 +68,17 @@ export default function RequestModal(props) {
         forceUpdate();
     }
 
+    const handleReqsave = () => {
+        props.handlerequest(currentObj)
+        props.onHide();
+    }
+
+    const handleChange = (event) => {
+        console.log(event.target);
+        console.log(event.target.value)
+        console.log(event.target.id)
+    }
+
     // useEffect(() => {
     //     if (props.isEdit) {
     //         setCurrentObj(props.request)
@@ -110,6 +121,7 @@ export default function RequestModal(props) {
                                     name: 'method',
                                     id: 'method',
                                 }}
+                                onChange={handleChange}
                             >
                             <option value={10}>GET</option>
                             <option value={20}>POST</option>
@@ -124,13 +136,13 @@ export default function RequestModal(props) {
                     <Box sx={{ width: '35%' }}>
                         <FormControl variant="standard" sx={{width: '100%'}} >
                             <InputLabel htmlFor="request-url">Url</InputLabel>
-                            <Input id="request-url" value={currentObj.Url} />
+                            <Input id="request-url" value={currentObj.Url} onChange={handleChange}/>
                         </FormControl>
                     </Box>
                     <Box sx={{ width: '45%' }}>
                         <FormControl variant="standard"  sx={{width: '100%'}} >
                             <InputLabel htmlFor="request-uri">Uri</InputLabel>
-                            <Input id="request-uri" value={currentObj.Uri} />
+                            <Input id="request-uri" value={currentObj.Uri} onChange={handleChange}/>
                         </FormControl>
                     </Box>
                 </Stack>
@@ -154,6 +166,7 @@ export default function RequestModal(props) {
                                 key={currentObj.Id + '-' + value.HeaderName + '-' + index}
                                 index={index}
                                 delete={deleteHeader}
+                                handlechange={handleChange}
                             />
                         );
                     })}
@@ -174,7 +187,7 @@ export default function RequestModal(props) {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Save</Button>
+                <Button onClick={handleReqsave}>Save</Button>
                 <Button onClick={props.onHide} variant="danger">Close</Button>
             </Modal.Footer>
         </Modal>

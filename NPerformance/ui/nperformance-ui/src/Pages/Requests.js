@@ -61,12 +61,55 @@ export default function Requests() {
 
   const addRequest = (newReq) => {
     let tmpConf = conf;
-    tmpConf.Requests.push(newReq)
+    let ix = 0
+    tmpConf.Requests.forEach((value, index) => {
+      if (value.Id == newReq.Id) {
+        ix = index;
+      }
+    })
+    if(ix == 0) {
+      //new request
+      let  reqs = tmpConf.Requests;
+      reqs.push(newReq)
+      reqs.sort((a, b) => {
+        return a.Id - b.Id;
+      })
+      tmpConf.Requests = reqs;
+    }
+    else {
+      tmpConf.Requests[ix] = newReq;
+    }
     setConf(tmpConf)
   }
 
-  const openModal = () => {
-    //setCurentReq(createNewRequestObject)
+  const selectIds = ({Id, ...rest}) => ({Id})
+
+  function findFreeId(requests) {
+    var Ids = requests.map(selectIds);
+    Ids.sort(function(a, b) {
+      return a - b;
+    });
+    console.log(Ids);
+    var id = 1;
+    for (let i = 0; i < Ids.length; i++) {
+      if ((Ids.length >= i + 2) && (Ids[i + 1].Id != Ids[i].Id + 1)) {
+        // we have a gap in sorted array with not used ID 
+        id = Ids[i].Id + 1;
+        break;
+      }
+    }
+    if (id == 1) {
+      id = Ids.length + 1;
+    }
+    console.log(id);
+    return id;
+  }
+
+  const openNewModal = () => {
+    var req = createNewRequestObject;
+    req.Id = findFreeId(conf.Requests)
+
+    setCurentReq(req);
     setShowModal(true);
   }
 
@@ -85,7 +128,7 @@ export default function Requests() {
   useEffect(() => {
     console.log('rerender Requests')
     if (!conf) return;
-  })
+  }, [conf, curentReq])
 
   console.log(conf, curentReq);
 
@@ -94,7 +137,7 @@ export default function Requests() {
         <div>
           <Stack direction='row'>
             <Box sx={{ width: '5%'}}>
-              <IconButton onClick={openModal}>
+              <IconButton onClick={openNewModal}>
                 <AddCircleIcon color="primary" fontSize="large" />
               </IconButton>
             </Box>
@@ -116,11 +159,12 @@ export default function Requests() {
             })}
         </div>
         <div id="Modal">
-          <RequestModal 
+          <RequestModal key = {curentReq.Id}
             show={showModal}
             onHide={() => setShowModal(false)}
             request={curentReq}
             addnewheader={addEmptyHeader}
+            handlerequest={addRequest}
           />
         </div>
       </>
