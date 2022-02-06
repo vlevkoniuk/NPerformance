@@ -18,6 +18,16 @@ export default function RequestModal(props) {
     const [currentObj, setCurrentObj] = useState(props.request);
     const [headers, setHeaders] = useState(props.request.Headers)
     const [state, updateState] = React.useState();
+
+    const httpMethods = {
+        10: "GET",
+        20: "POST",
+        30: "PUT",
+        40: "DELETE",
+        50: "HEAD",
+        60: "OPTIONS",
+        70: "PATCH"
+    }
     
     console.log(props)
 
@@ -77,17 +87,43 @@ export default function RequestModal(props) {
         console.log(event.target);
         console.log(event.target.value)
         console.log(event.target.id)
+        const elementId = event.target.id;
+        let obj = currentObj;
+        if (elementId === "request-url") {
+            obj.Url = event.target.value;
+            console.log(obj.Url)
+        }
+        else if (elementId === "request-uri") {
+            obj.Uri = event.target.value;
+            console.log(obj.Uri)
+        }
+        else if (elementId === "method") {
+            obj.Method = httpMethods[event.target.value];
+        }
+        else if (elementId === "request-body") {
+            obj.Body = event.target.value;
+        }
+        else if (elementId.includes("header-type-")) {
+            let headerIndex = parseInt(elementId.replace("header-type-", ""))
+            obj.Headers[headerIndex].HeaderName = event.target.value;
+        }
+        else if (elementId.includes("header-value-")) {
+            let headerIndex = parseInt(elementId.replace("header-value-", ""));
+            obj.Headers[headerIndex].HeaderValue = event.target.value;
+        }
+        setCurrentObj(obj);
+        forceUpdate();
     }
 
     // useEffect(() => {
-    //     if (props.isEdit) {
-    //         setCurrentObj(props.request)
-    //     }
-    //     else {
-    //         //new request
-    //         console.log("rerender modal", props);
-    //         //setCurrentObj(createNewRequestObject());
-    //     }
+    //     // if (props.isEdit) {
+    //     //     setCurrentObj(props.request)
+    //     // }
+    //     // else {
+    //     //     //new request
+    //     //     console.log("rerender modal", props);
+    //     //     //setCurrentObj(createNewRequestObject());
+    //     // }
     // }, [ currentObj])
 
     return (
@@ -98,8 +134,8 @@ export default function RequestModal(props) {
             centered
             >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                Add/Edit Request
+                <Modal.Title id="add-edit-modal-title">
+                    Add/Edit Request
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -116,20 +152,20 @@ export default function RequestModal(props) {
                                 Method
                             </InputLabel>
                             <NativeSelect
-                                defaultValue={10}
+                                defaultValue={httpMethods[10]}
                                 inputProps={{
                                     name: 'method',
                                     id: 'method',
                                 }}
                                 onChange={handleChange}
                             >
-                            <option value={10}>GET</option>
-                            <option value={20}>POST</option>
-                            <option value={30}>PUT</option>
-                            <option value={40}>DELETE</option>
-                            <option value={50}>HEAD</option>
-                            <option value={60}>OPTIONS</option>
-                            <option value={70}>PATCH</option>
+                                {
+                                    Object.keys(httpMethods).map((key, value) => {
+                                        return (
+                                            <option value={key}>{httpMethods[key]}</option>
+                                        )
+                                    })
+                                }
                             </NativeSelect>
                         </FormControl>
                     </Box>
@@ -175,7 +211,7 @@ export default function RequestModal(props) {
                 <Box>
                     <Box>
                         <TextField
-                            id="outlined-multiline-static"
+                            id="request-body"
                             label="Request Body"
                             multiline
                             rows={5}

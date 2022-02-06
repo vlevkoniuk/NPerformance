@@ -61,7 +61,7 @@ export default function Requests() {
 
   const addRequest = (newReq) => {
     let tmpConf = conf;
-    let ix = 0
+    let ix = 0;
     tmpConf.Requests.forEach((value, index) => {
       if (value.Id == newReq.Id) {
         ix = index;
@@ -70,7 +70,7 @@ export default function Requests() {
     if(ix == 0) {
       //new request
       let  reqs = tmpConf.Requests;
-      reqs.push(newReq)
+      reqs.push(newReq);
       reqs.sort((a, b) => {
         return a.Id - b.Id;
       })
@@ -79,7 +79,8 @@ export default function Requests() {
     else {
       tmpConf.Requests[ix] = newReq;
     }
-    setConf(tmpConf)
+    setConf(tmpConf);
+    console.log(tmpConf);
   }
 
   const selectIds = ({Id, ...rest}) => ({Id})
