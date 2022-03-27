@@ -6,6 +6,7 @@ namespace NPerformance.Models
 {
     public class RequestsSequence
     {
-        public List<Request> Requests { get; set; }
+        public string Description { get; set; }
+        public List<RequestInfo> Requests { get; set; }
     }
 }

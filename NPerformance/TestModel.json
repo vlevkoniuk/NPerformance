@@ -11,7 +11,7 @@
 	"Requests": [
 		{
 			"Id": 1,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/test",
 			"Method": "GET",
 			"Body": "",
@@ -28,7 +28,7 @@
 		},
 		{
 			"Id": 2,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testpost",
 			"Method": "POST",
 			"Body": "",
@@ -45,7 +45,7 @@
 		},
 		{
 			"Id": 3,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/test",
 			"Method": "HEAD",
 			"Body": "",
@@ -62,7 +62,7 @@
 		},
 		{
 			"Id": 4,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testpost",
 			"Method": "OPTIONS",
 			"Body": "",
@@ -79,7 +79,7 @@
 		},
 		{
 			"Id": 5,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testusr2",
 			"Method": "GET",
 			"Body": "",
@@ -96,7 +96,7 @@
 		},
 		{
 			"Id": 6,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testpostusr2",
 			"Method": "POST",
 			"Body": "",
@@ -113,7 +113,7 @@
 		},
 		{
 			"Id": 7,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testusr2",
 			"Method": "HEAD",
 			"Body": "",
@@ -130,7 +130,7 @@
 		},
 		{
 			"Id": 8,
-			"Url": "https://localhost:44305/",
+			"Url": "https://localhost:44394/",
 			"Uri": "weatherforecast/testpostusr2",
 			"Method": "OPTIONS",
 			"Body": "",

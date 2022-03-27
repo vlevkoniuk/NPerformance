@@ -9,19 +9,19 @@ namespace NPerformance.Helpers
 {
     public static class TestFilesHelper
     {
-        public static  List<RequestSequenceCollection> ReadTestFile()
+        public static  PerfModel ReadTestFile()
         {
             string path = Directory.GetCurrentDirectory();
             path = Directory.GetParent(path).Parent.Parent.FullName;
             string text = File.ReadAllText(path + "\\TestModel.json");
-            List<RequestSequenceCollection> requestSequenceCollection = JsonConvert.DeserializeObject<List<RequestSequenceCollection>>(text);
+            PerfModel requestSequenceCollection = JsonConvert.DeserializeObject<PerfModel>(text);
             return requestSequenceCollection;
         }
 
-        public static List<RequestSequenceCollection> ReadTestFile(string filepath)
+        public static PerfModel ReadTestFile(string filepath)
         {
             string text = File.ReadAllText(filepath + "\\TestModel.json");
-            List<RequestSequenceCollection> requestSequenceCollection = JsonConvert.DeserializeObject<List<RequestSequenceCollection>>(text);
+            PerfModel requestSequenceCollection = JsonConvert.DeserializeObject<PerfModel>(text);
             return requestSequenceCollection;
         }
     }

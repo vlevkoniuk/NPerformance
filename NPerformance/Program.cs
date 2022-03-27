@@ -21,12 +21,12 @@ namespace NPerformance
 
         async static Task Main(string[] args)
         {
-            List<RequestSequenceCollection> requestSequenceCollection = TestFilesHelper.ReadTestFile();
+            PerfModel perModel = TestFilesHelper.ReadTestFile();
             List<Task> tasks = new List<Task>();
             Parallel.For(1, 3, (i) =>
             {
                 Task t = new Task(() => {
-                    TaskHelper.PrepareAndRunTasks(i, requestSequenceCollection, perfData);
+                    TaskHelper.PrepareAndRunTasks(i, perModel, perfData);
                 });
                 lock (_locker)
                 {
@@ -39,11 +39,11 @@ namespace NPerformance
                 tasks[y].Start();
             }
             Stopwatch sw = Stopwatch.StartNew();
-            PerformTesting(tasks, requestSequenceCollection, 10, 50);
+            PerformTesting(tasks, perModel, 10, 50);
             sw.Stop();
             Task.WaitAll(tasks.ToArray());
 
-            TaskHelper.PrepareAndRunTasks(1, requestSequenceCollection, perfData);
+            TaskHelper.PrepareAndRunTasks(1, perModel, perfData);
             
             //var ttt = TaskHelper.CreateAsync(1, requestSequenceCollection, perfData);
             
@@ -68,7 +68,7 @@ namespace NPerformance
             
         }
 
-        static void PerformTesting(List<Task> tasks, List<RequestSequenceCollection> requestSequenceCollection, int cntSeconds, int delay)
+        static void PerformTesting(List<Task> tasks, PerfModel perfModel, int cntSeconds, int delay)
         {
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.ElapsedMilliseconds / 1000 < cntSeconds)
@@ -79,7 +79,7 @@ namespace NPerformance
                     {
                         Thread.Sleep(delay);
                         tasks[(int)elementIndex].ContinueWith(x => {
-                            TaskHelper.PrepareAndRunTasks((int)elementIndex + 1, requestSequenceCollection, perfData);
+                            TaskHelper.PrepareAndRunTasks((int)elementIndex + 1, perfModel, perfData);
                         });
                     }
                 });
